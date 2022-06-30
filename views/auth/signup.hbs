@@ -1,0 +1,31 @@
+<div id="form">
+  <h2>Signup</h2>
+  <form action="/signup" method="POST">
+ 
+    <label> Username
+      <input type="text" name="username" placeholder="picasso" />
+    </label>
+ 
+    <label> Email
+      <input type="email" name="email" placeholder="picasso@ironhack.com" />
+    </label>
+    <label> Status:
+      <select type="status" name="status" id="status">
+        <option name="" value="">Select status</option>
+          <option value="owner">Owner</option>
+          <option value="artist">Artist</option>
+          <option value="art-admiarer">Art-admiarer</option>
+      </select>
+    </label>
+ 
+    <label> Password
+      <input type="password" name="password" placeholder="********" />
+    </label>
+ 
+    <button type="submit">Create account</button>
+ 
+      {{#if errorMessage}}
+         <p class="error">{{errorMessage}}</p>
+      {{/if}}
+  </form>
+</div>

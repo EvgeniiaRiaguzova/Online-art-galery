@@ -9,12 +9,18 @@ const userSchema = new Schema({
     unique: true
   },
   email: {
-    type: String
+    type: String,
+    required: [true, 'Email is required.'],
+    // this match will disqualify all the emails with accidental empty spaces, missing dots in front of (.)com and the ones with no domain at all
+    match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address.'],
+    unique: true,
+    lowercase: true,
+    trim: true
   },
-  artist: 
+  status: 
   {
-  type: Boolean,
-  required: [true, 'Status is required.']
+   type: String,
+   required: [true, 'Status is required.']
   },
   password: {
     type: String,
