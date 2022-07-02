@@ -20,7 +20,7 @@ require("./config/session.config")(app);
 
 // default value for title local
 const capitalized = require("./utils/capitalized");
-const projectName = "online-art-galery";
+const projectName = "online-art-gallery";
 
 app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
