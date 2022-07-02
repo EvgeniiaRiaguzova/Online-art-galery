@@ -4,6 +4,8 @@ const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
 const User = require('../models/User.model');
 const mongoose = require('mongoose');
+const { isLoggedIn, isLoggedOut } = require('../middleware/route-guard.js');
+ 
 
 //////////// S I G N U P ///////////
 // GET route ==> to display the signup form to users
@@ -62,7 +64,9 @@ router.get('/login', (req, res) => res.render('auth/login'));
 
 // POST login route ==> to process form data
 router.post('/login', (req, res, next) => {
-    const { email, password } = req.body;
+  //console.log('SESSION =====> ', req.session);
+   
+  const { email, password } = req.body;
    
     if (email === '' || password === '') {
       res.render('auth/login', {
@@ -77,7 +81,8 @@ router.post('/login', (req, res, next) => {
           res.render('auth/login', { errorMessage: 'Email is not registered. Try with other email.' });
           return;
         } else if (bcryptjs.compareSync(password, user.password)) {
-          res.render('users/user-profile', { user });
+          req.session.currentUser = user; //******* SAVE THE USER IN THE SESSION ********//
+          res.redirect('userProfile');
         } else {
           res.render('auth/login', { errorMessage: 'Incorrect password.' });
         }
@@ -85,5 +90,17 @@ router.post('/login', (req, res, next) => {
       .catch(error => next(error));
   });
 
-    router.get('/userProfile', (req, res) => res.render('users/user-profile')); 
-module.exports = router;
+  //////////// U S E R  P R O F I L E ///////////
+  router.get('/userProfile', isLoggedIn, (req, res) => {
+    console.log(req.session.currentUser)
+    res.render('users/user-profile', { userInSession: req.session.currentUser });
+  });
+
+  //////////// L O G O U T ///////////
+  router.post('/logout', (req, res, next) => {
+    req.session.destroy(err => {
+      if (err) next(err);
+      res.redirect('/');
+    });
+  });
+module.exports = router;   
