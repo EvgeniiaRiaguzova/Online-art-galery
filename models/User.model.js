@@ -25,7 +25,8 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: [true, 'Password is required.']
-  }
+  },
+  paintings: [{type: Schema.Types.ObjectId, ref: "Painting"}]
 });
 
 const User = model("User", userSchema);
