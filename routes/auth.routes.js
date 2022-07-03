@@ -4,7 +4,7 @@ const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
 const User = require('../models/User.model');
 const mongoose = require('mongoose');
-const { isLoggedIn, isLoggedOut } = require('../middleware/route-guard.js');
+const { isLoggedIn, isLoggedOut, isAdmirer } = require('../middleware/route-guard.js');
  
 
 //////////// S I G N U P ///////////
@@ -93,13 +93,13 @@ router.post('/login', isLoggedOut, (req, res, next) => {
 
   //////////// U S E R  P R O F I L E ///////////
 
-  router.get('/userProfile', isLoggedIn, (req, res) => {
+  router.get('/userProfile', [isLoggedIn, isAdmirer], (req, res) => {
     console.log(req.session.currentUser)
     res.render('users/user-profile', { userInSession: req.session.currentUser });
   });
 
   //////////// L O G O U T ///////////
-  
+
   router.post('/logout', isLoggedIn, (req, res, next) => {
     req.session.destroy(err => {
       if (err) next(err);

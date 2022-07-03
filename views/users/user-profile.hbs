@@ -1,6 +1,10 @@
 {{#if userInSession}}
   <h2>Welcome, {{ userInSession.username }}!</h2>
-  <p>This is your profile page my friend!</p>
+  <p>This is your profile page my friend! {{userInSession.isAdmirer}}</p>
+  
+  {{#unless userInSession.isAdmirer}}
+  <a href="/paintings/create">Add painting</a>
+  {{/unless}}
   <button>
     <a href="/userProfile">Reload the page</a>
   </button>
