@@ -4,14 +4,15 @@ const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
 const User = require('../models/User.model');
 const mongoose = require('mongoose');
-const { isLoggedIn, isLoggedOut } = require('../middleware/route-guard.js');
+const { isLoggedIn, isLoggedOut, isAdmirer } = require('../middleware/route-guard.js');
  
 
 //////////// S I G N U P ///////////
+
 // GET route ==> to display the signup form to users
-router.get('/signup', (req, res) => res.render('auth/signup'));
+router.get('/signup', isLoggedOut, (req, res) => res.render('auth/signup'));
 // POST route ==> to process form data
-router.post('/signup', (req, res, next) => {
+router.post('/signup',isLoggedOut, (req, res, next) => {
     const { username, email, status, password } = req.body;
     if (!username || !email || status =="" || !password) {
         res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email, status and password.' });
@@ -60,10 +61,10 @@ router.post('/signup', (req, res, next) => {
 //////////// L O G I N ///////////
  
 // GET route ==> to display the login form to users
-router.get('/login', (req, res) => res.render('auth/login'));
+router.get('/login', isLoggedOut, (req, res) => res.render('auth/login'));
 
 // POST login route ==> to process form data
-router.post('/login', (req, res, next) => {
+router.post('/login', isLoggedOut, (req, res, next) => {
   //console.log('SESSION =====> ', req.session);
    
   const { email, password } = req.body;
@@ -91,13 +92,15 @@ router.post('/login', (req, res, next) => {
   });
 
   //////////// U S E R  P R O F I L E ///////////
-  router.get('/userProfile', isLoggedIn, (req, res) => {
+
+  router.get('/userProfile', [isLoggedIn, isAdmirer], (req, res) => {
     console.log(req.session.currentUser)
     res.render('users/user-profile', { userInSession: req.session.currentUser });
   });
 
   //////////// L O G O U T ///////////
-  router.post('/logout', (req, res, next) => {
+
+  router.post('/logout', isLoggedIn, (req, res, next) => {
     req.session.destroy(err => {
       if (err) next(err);
       res.redirect('/');

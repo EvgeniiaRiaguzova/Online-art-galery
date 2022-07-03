@@ -1,0 +1,41 @@
+<h2>Add a painting</h2>
+
+<form action="/paintings/create" method="post" enctype="multipart/form-data">
+    
+  <label> Title:
+    <input type="text" name="title" />
+  </label>
+ 
+  <label> Author:
+    <input type="text" name="author" />
+  </label>
+
+  <label> Size (w/h):
+    <input type="text" name="size" />
+  </label>  
+
+  <label> Year:
+    <input type="text" name="year" />
+  </label>
+ 
+  <label> Description:
+    <textarea name="description" cols="30" rows="3"> </textarea>
+  </label>
+
+  <label> Starting bid:
+    <input type="text" name="starting_bid" />
+  </label>
+
+  <label> Painting:
+    <input type="file" name="painting-image" />
+  </label>
+
+  <button type="submit"> Submit </button>
+
+  {{#if errorMessage}}
+      <p class="error">{{errorMessage}}</p>
+    {{/if}}
+    
+</form>
+<br><br>
+<a href="/">Back</a>

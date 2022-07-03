@@ -14,8 +14,16 @@ const isLoggedIn = (req, res, next) => {
     }
     next();
   };
-   
+  
+  const isAdmirer = (req, res, next) => { 
+    if (req.session.currentUser.status == "art-admirer") {
+        req.session.currentUser.isAdmirer = true
+      }
+      next();
+  }
+ 
   module.exports = {
     isLoggedIn,
-    isLoggedOut
+    isLoggedOut, 
+    isAdmirer
   };
