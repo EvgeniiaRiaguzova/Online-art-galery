@@ -5,9 +5,11 @@
     <label> Username
       <input type="text" name="username" placeholder="picasso" />
     </label>
- 
     <label> Email
       <input type="email" name="email" placeholder="picasso@ironhack.com" />
+    </label>
+    <label> Password
+      <input type="password" name="password" placeholder="********" />
     </label>
     <label> Status:
       <select type="status" name="status" id="status">
@@ -17,11 +19,12 @@
           <option value="art-admirer">Art-admirer</option>
       </select>
     </label>
- 
-    <label> Password
-      <input type="password" name="password" placeholder="********" />
+    <label for="userAvatar">Your portret:
+      <input type="file" name="userAvatar" id="userAvatar"/>
     </label>
- 
+    <label> About me:
+    <textarea name="description" cols="30" rows="3"> </textarea>
+  </label>
     <button type="submit">Create account</button>
  
       {{#if errorMessage}}

@@ -1,13 +1,29 @@
 {{#if userInSession}}
   <h2>Welcome, {{ userInSession.username }}!</h2>
+<<<<<<< Updated upstream
   <p>This is your profile page my friend! {{userInSession.isAdmirer}}</p>
   
   {{#unless userInSession.isAdmirer}}
   <a href="/paintings/create">Add painting</a>
   {{/unless}}
+=======
+<<<<<<< Updated upstream
+  <p>This is your profile page my friend!</p>
+=======
+  <p>This is your profile page my friend! {{userInSession.isAdmirer}}</p>
+  <img src="{{userInSession.imageUrl}}" alt="{{userInSession.userName}}"/>
+  {{#unless userInSession.isAdmirer}}
+  <a href="/paintings/create">Add painting</a>
+  {{/unless}}
+
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
   <button>
     <a href="/userProfile">Reload the page</a>
   </button>
+
+  <a href="/users/{{userInSession._id}}/edit" class="btn btn-primary">Edit your profile</a>
+
 {{else}}
   
   <br><p>Still no logged in user, sorry!</p>
