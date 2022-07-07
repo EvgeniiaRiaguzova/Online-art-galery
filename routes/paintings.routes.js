@@ -37,12 +37,12 @@ router.post('/paintings/create', fileUploader.single('painting-image'), (req, re
     const { title, author, size, year, description, starting_bid } = req.body;
 
     if(!title || !author || !year || !req.file) {
-        res.render('paintings/new-painting.hbs', {errorMessage : "Please provide the title, the author, the year and the painting."});
+        res.render('paintings/new-painting.hbs', {errorMessage : "Please provide title, author, year and the painting image."});
     }
    
     Painting.create({ title, author, size, year, description, starting_bid, imageUrl: req.file.path })
       // .then(paintingFromDB => console.log(`New painting created: ${paintingFromDB.title}.`))
-      .then((newlyCreatedPaintingFromDB ) => res.redirect('/paintings'))
+      .then((newlyCreatedPaintingFromDB) => res.redirect('/paintings'))
       .catch(err => {
         console.log(`ERROR creating Painting: ${err}`);
         res.redirect("/paintings/create");
@@ -52,27 +52,36 @@ router.post('/paintings/create', fileUploader.single('painting-image'), (req, re
 
   // 3. Updating paintings details / Update 
 
-  //Get route to display the form
+  //Get route to display and pre-fill the form
 
   router.get("/paintings/:id/edit", async (req, res, next) => {
     const { id } = req.params;
     try {
         const painting = await Painting.findById(id);
-        res.render("paintings/edit-painting", { painting });
+        res.render("paintings/update-painting", { painting });
       } catch (err) {
-        return next(err);
+        console.log(`Error while getting a painting for edit: ${err}`);
+        next(err);
       }
   })
 
-  router.post('/paintings/:id/edit', (req, res, next) => {
+  router.post('/paintings/:id/edit', fileUploader.single('painting-image'), (req, res, next) => {
     const { id } = req.params;
-    const { title, author, size, year, description, starting_bid } = req.body;
+    const { title, author, size, year, description, starting_bid, existingImage } = req.body;
+
+    let imageUrl;
+
+    if(req.file) {
+      imageUrl = req.file.path;
+    } else {
+      imageUrl = existingImage;
+    }
    
-    Painting.findByIdAndUpdate(id, { title, author, size, year, description, starting_bid }, { new: true })
-       
+    Painting.findByIdAndUpdate(id, { title, author, size, year, description, starting_bid, imageUrl}, { new: true })
       .then(updatedPainting => res.redirect(`/paintings/${updatedPainting._id}`)) // go to the details page to see the updates
       .catch(error => {
-        return next(error)
+        console.log(`Error while updating a painting: ${err}`);
+        next(error);
         });
     });
 
@@ -86,7 +95,8 @@ router.post('/paintings/create', fileUploader.single('painting-image'), (req, re
         res.redirect("/paintings");
       })
       .catch((err) => {
-        return next(err);
+        console.log(`Error while deleting a painting: ${err}`);
+        next(error);
       });
   });
 
@@ -101,7 +111,8 @@ router.get("/paintings/:id", (req, res, next) => {
         res.render("paintings/painting-details", { painting });
       })
       .catch((err) => {
-        return next(err);
+        console.log(`Error while displaying painting details: ${err}`);
+        next(error);
       });
   });
 

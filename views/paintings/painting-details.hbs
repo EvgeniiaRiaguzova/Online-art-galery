@@ -1,0 +1,14 @@
+<h2>{{painting.title}}</h2>
+<hr>
+<img src="{{painting.imageUrl}}" alt="{{painting.title}}">
+<h5>By: {{painting.author}}</h5>
+<p> Year: {{painting.year}}</p>
+<p>Size (w/h): {{painting.size}}</p>
+<p>Description: {{painting.description}}</p>
+<p>Starting bid: {{painting.starting_bid}}</p>
+<br>
+<a href="/paintings/{{painting._id}}/edit">Edit</a>
+<form action="/paintings/{{painting._id}}/delete" method="POST">
+<button>Delete</button>
+</form>
+<a href="/paintings">Back</a>
