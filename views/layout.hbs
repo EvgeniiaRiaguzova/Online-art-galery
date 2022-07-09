@@ -8,17 +8,23 @@
       <title>{{appTitle}}</title>
       <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" /> {{!-- has to be added --}}
       <link rel="stylesheet" href="/stylesheets/style.css" />
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" /> 
+      <link rel="stylesheet" href="/stylesheets/style.css" />
    </head>
 
    <body>
+     
     <nav>
       <ul>
         <li id="to-left">
-          <a href="/"> Online art galery </a> 
-          {{!-- removed the <p></p> from above --}}
+
+         <a href="/"><img id="logo" src="images/LogoSample_ByTailorBrands.png" alt="logo"></a>  
+
           <a href="/paintings">Paintings at auction</a>
+
         </li>
         <li id="to-right">
+          <a href="/users-list">Artists</a> <span> | </span>
           <a href="/signup">Signup</a> <span> | </span>
           <a href="/login">Login</a> <span> | </span>
   <form id="logout-form" action="/logout" method="POST">

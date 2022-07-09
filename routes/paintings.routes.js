@@ -5,8 +5,7 @@ const router = require("express").Router();
 // require the Painting model
 
 const Painting = require ('../models/Painting.model')
-
-const User = require ('../models/User.model')
+const User = require('../models/User.model')
 
 //require cloudinary
 
@@ -43,6 +42,7 @@ router.get('/paintings/create', isLoggedIn, (req, res) => {
 
 // POST route to save a new painting to the database in the paintings collection
 
+
 router.post('/paintings/create', isLoggedIn, fileUploader.single('painting-image'), (req, res, next) => {
      //console.log(req.body);
     const { title, size, year, description, starting_bid } = req.body;
@@ -59,6 +59,7 @@ router.post('/paintings/create', isLoggedIn, fileUploader.single('painting-image
          return User.findByIdAndUpdate(req.session.currentUser._id, { $push: { paintings: newlyCreatedPaintingFromDB._id } });
       })
       .then(() => res.redirect('/userProfile'))
+
       .catch(err => {
         console.log(`ERROR creating Painting: ${err}`);
         res.redirect("/paintings/create");

@@ -5,15 +5,16 @@ const saltRounds = 10;
 const User = require('../models/User.model');
 const mongoose = require('mongoose');
 const { isLoggedIn, isLoggedOut, isAdmirer } = require('../middleware/route-guard.js');
- 
+const fileUploader = require('../config/cloudinary.config'); 
 
 //////////// S I G N U P ///////////
 
 // GET route ==> to display the signup form to users
 router.get('/signup', isLoggedOut, (req, res) => res.render('auth/signup'));
 // POST route ==> to process form data
-router.post('/signup',isLoggedOut, (req, res, next) => {
-    const { username, email, status, password } = req.body;
+router.post('/signup',[isLoggedOut, fileUploader.single('userAvatar')] , (req, res, next) => {
+   console.log(req.file);
+  const { username, email, password, status, description} = req.body;
     if (!username || !email || status =="" || !password) {
         res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email, status and password.' });
         return;
@@ -31,19 +32,20 @@ router.post('/signup',isLoggedOut, (req, res, next) => {
     .then(salt => bcryptjs.hash(password, salt))
     .then(hashedPassword => {
         return User.create({
-            // username: username
             username,
             email,
-            status,
             // passwordHash => this is the key from the User model
             //     ^
             //     |            |--> this is placeholder (how we named returning value from the previous method (.hash()))
-            password: hashedPassword
+            password: hashedPassword,
+            status,
+           imageUrl: req.file.path,
+            description
           });
         })
         .then(userFromDB => {
           console.log('Newly created user is: ', userFromDB);
-          res.redirect('/userProfile');
+          res.redirect('/login');
         })
         .catch(error => {
             if (error instanceof mongoose.Error.ValidationError) {

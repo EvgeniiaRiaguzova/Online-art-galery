@@ -1,13 +1,37 @@
 {{#if userInSession}}
   <h2>Welcome, {{ userInSession.username }}!</h2>
-  <p>This is your profile page my friend! {{userInSession.isAdmirer}}</p>
+  <p>This is your profile page my friend!</p>
   
+  <img src="{{userInSession.imageUrl}}" alt="{{userInSession.userName}}"/>
   {{#unless userInSession.isAdmirer}}
   <a href="/paintings/create">Add painting</a>
   {{/unless}}
+
+<h3>Your paintings</h3>
+ {{#each paintings}}
+    <div class="col-md-4 mb-5">
+        <div class="card" style="width: 18rem;">
+            <img src="{{userInSession.paintings}}" alt="{{title}}">
+            <div class="card-body">
+                <h5 class="card-title">{{title}}</h5>
+                <p class="card-text">{{year}}</p>
+            </div>
+        </div>
+    </div>
+{{else}}
+    <p>No paintings yet</p>
+{{/each}}
+
   <button>
     <a href="/paintings">Paintings at auction</a>
   </button>
+
+  <a href="/users/{{userInSession._id}}/edit" class="btn btn-primary">Edit your profile</a>
+
+ <form action="/users/{{userInSession._id}}/delete" method="POST">
+      <button>Delete</button>
+ </form>
+
 {{else}}
   
   <br><p>Still no logged in user, sorry!</p>
