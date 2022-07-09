@@ -4,7 +4,9 @@
 
         <img src="{{painting.imageUrl}}" alt="{{painting.title}}">
             <div class="card-body">
-                <h5>{{painting.author}}</h5>
+                {{#each painting.author}}
+                <h5>{{this.username}}</h5>
+                {{/each}}
                 <p> Year: {{painting.year}}</p>
                 <p>Size (w/h): {{painting.size}}</p>
                 <p>Description: {{painting.description}}</p>
@@ -14,13 +16,13 @@
                 <button id="delete-painting-btn">Delete</button>
                 </form>
 
-                {{#if userInSession.isLoggedOut}}
+                {{#unless userInSession}}
                 <form action="/login" method="POST">
                 <button id="login-and-bid-btn">Log in and bid</button>
                 </form>
                 {{else}}
                 <a href="/paintings">Put in a bid</a>
-                {{/if}}
+                {{/unless}}
 
 
             </div>

@@ -23,7 +23,7 @@ router.get('/paintings', (req, res, next) => {
     .populate("author")
     .then((allPaintingsFromDB) => {
         // console.log(allPaintingsFromDB)
-        res.render('paintings/paintings.hbs', {paintings : allPaintingsFromDB})
+        res.render('paintings/paintings.hbs', {paintings : allPaintingsFromDB, userInSession : req.session.currentUser})
     })
     .catch(err=>next(err))
 })
@@ -45,20 +45,20 @@ router.get('/paintings/create', isLoggedIn, (req, res) => {
 
 router.post('/paintings/create', isLoggedIn, fileUploader.single('painting-image'), (req, res, next) => {
      //console.log(req.body);
-    const { title, author, size, year, description, starting_bid } = req.body;
+    const { title, size, year, description, starting_bid } = req.body;
 
     if(!title || !year || !req.file) {
         res.render('paintings/new-painting.hbs', {errorMessage : "Please provide title, author, year and the painting image."});
     }
-   //console.log(req.session.currentUser)
-    Painting.create({ title, author: req.session.currentUser.id, size, year, description, starting_bid, imageUrl: req.file.path })
+   console.log(req.session.currentUser)
+    Painting.create({ title, author: req.session.currentUser._id, size, year, description, starting_bid, imageUrl: req.file.path })
      
       .then((newlyCreatedPaintingFromDB) => {
         // Painting.findByIdAndUpdate(newlyCreatedPaintingFromDB.id, {author: req.session.currentUser.id })
         // res.redirect('/userProfile')
-          return User.findByIdAndUpdate(author, { $push: { paintings: newlyCreatedPaintingFromDB._id } });
+         return User.findByIdAndUpdate(req.session.currentUser._id, { $push: { paintings: newlyCreatedPaintingFromDB._id } });
       })
-     // .then(() => res.redirect('/userProfile'))
+      .then(() => res.redirect('/userProfile'))
       .catch(err => {
         console.log(`ERROR creating Painting: ${err}`);
         res.redirect("/paintings/create");
@@ -125,7 +125,7 @@ router.get("/paintings/:id", (req, res, next) => {
     Painting.findById(id)
       .populate('author')
       .then((painting) => {
-        res.render("paintings/painting-details", { painting });
+        res.render("paintings/painting-details", { painting, userInSession : req.session.currentUser });
       })
       .catch((err) => {
         console.log(`Error while displaying painting details: ${err}`);

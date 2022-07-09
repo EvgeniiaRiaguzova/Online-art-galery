@@ -8,7 +8,7 @@ const paintingSchema = new Schema (
             required: [true, 'Title is required.'],
         },
 
-        author: {type: Schema.Types.ObjectId, ref: "User"},
+        author: [{type: Schema.Types.ObjectId, ref: "User"}],
 
         size: String, //40x50 cm (w/h)
 
