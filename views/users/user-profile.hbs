@@ -28,9 +28,9 @@
 
   <a href="/users/{{userInSession._id}}/edit" class="btn btn-primary">Edit your profile</a>
 
- <form action="/users/{{_id}}/delete" method="POST">
+ <form action="/users/{{userInSession._id}}/delete" method="POST">
       <button>Delete</button>
-    </form>
+ </form>
 
 {{else}}
   

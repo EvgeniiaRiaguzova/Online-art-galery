@@ -47,10 +47,10 @@ router.get('/users-list', (req, res) => {
 
     //////////// USERS DELETE ///////////
 
-    router.post('/user-profile/:id/delete', (req, res, next) => {
+    router.post('/users/:id/delete', (req, res, next) => {
       
       const { id } = req.params;
-     
+      console.log(id)
       User.findByIdAndRemove(id)
         .then(() => res.redirect('/signup'))
         .catch(error => next(error));
