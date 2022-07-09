@@ -45,6 +45,16 @@ router.get('/users-list', (req, res) => {
       .catch(error => console.log(`Error while updating a single user: ${error}`));
   });  
 
+    //////////// USERS DELETE ///////////
+
+    router.post('/user-profile/:id/delete', (req, res, next) => {
+      
+      const { id } = req.params;
+     
+      User.findByIdAndRemove(id)
+        .then(() => res.redirect('/signup'))
+        .catch(error => next(error));
+    });
 
  
 module.exports = router;

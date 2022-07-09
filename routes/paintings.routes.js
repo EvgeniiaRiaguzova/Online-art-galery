@@ -5,6 +5,7 @@ const router = require("express").Router();
 // require the Painting model
 
 const Painting = require ('../models/Painting.model')
+const User = require('../models/User.model')
 
 //require cloudinary
 
@@ -34,15 +35,21 @@ router.get('/paintings/create', (req, res) => res.render('paintings/new-painting
 
 router.post('/paintings/create', fileUploader.single('painting-image'), (req, res, next) => {
     // console.log(req.body);
-    const { title, author, size, year, description, starting_bid } = req.body;
+    const { title , size, year, description, starting_bid } = req.body;
 
-    if(!title || !author || !year || !req.file) {
+    if(!title || !year || !req.file) {
         res.render('paintings/new-painting.hbs', {errorMessage : "Please provide the title, the author, the year and the painting."});
     }
-   
-    Painting.create({ title, author, size, year, description, starting_bid, imageUrl: req.file.path })
+    console.log(req.session)
+    Painting.create({ title, author: req.session.currentUser.id , size, year, description, starting_bid, imageUrl: req.file.path })
       // .then(paintingFromDB => console.log(`New painting created: ${paintingFromDB.title}.`))
-      .then((newlyCreatedPaintingFromDB ) => res.redirect('/paintings'))
+      .then((newlyCreatedPaintingFromDB ) => {
+            // find the user that has the id req.session.currentUser frim the db and populate with the paintings
+      User.findById(req.session.currentUser.id)
+        .populate("paintings")
+        .then (()=> res.redirect('users/user-profile'))
+      return User.findByIdAndUpdate()
+      })
       .catch(err => {
         console.log(`ERROR creating Painting: ${err}`);
         res.redirect("/paintings/create");

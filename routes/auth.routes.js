@@ -12,8 +12,8 @@ const fileUploader = require('../config/cloudinary.config');
 // GET route ==> to display the signup form to users
 router.get('/signup', isLoggedOut, (req, res) => res.render('auth/signup'));
 // POST route ==> to process form data
-router.post('/signup',[isLoggedOut, fileUploader.single('userAvatar')], (req, res, next) => {
-   
+router.post('/signup',[isLoggedOut, fileUploader.single('userAvatar')] , (req, res, next) => {
+   console.log(req.file);
   const { username, email, password, status, description} = req.body;
     if (!username || !email || status =="" || !password) {
         res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email, status and password.' });
@@ -31,7 +31,6 @@ router.post('/signup',[isLoggedOut, fileUploader.single('userAvatar')], (req, re
     .genSalt(saltRounds)
     .then(salt => bcryptjs.hash(password, salt))
     .then(hashedPassword => {
-      console.log(req)
         return User.create({
             username,
             email,
@@ -40,7 +39,7 @@ router.post('/signup',[isLoggedOut, fileUploader.single('userAvatar')], (req, re
             //     |            |--> this is placeholder (how we named returning value from the previous method (.hash()))
             password: hashedPassword,
             status,
-            imageUrl: req.file.path,
+           imageUrl: req.file.path,
             description
           });
         })
