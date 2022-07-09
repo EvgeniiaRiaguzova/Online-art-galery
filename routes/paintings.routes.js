@@ -6,9 +6,13 @@ const router = require("express").Router();
 
 const Painting = require ('../models/Painting.model')
 
+const User = require ('../models/User.model')
+
 //require cloudinary
 
 const fileUploader = require('../config/cloudinary.config');
+
+const { isLoggedIn, isLoggedOut, isAdmirer } = require('../middleware/route-guard.js');
 
 // 1. List all paintings / Read
 
@@ -16,9 +20,10 @@ const fileUploader = require('../config/cloudinary.config');
 
 router.get('/paintings', (req, res, next) => {
     Painting.find()
+    .populate("author")
     .then((allPaintingsFromDB) => {
         // console.log(allPaintingsFromDB)
-        res.render('paintings/paintings.hbs', {paintings : allPaintingsFromDB})
+        res.render('paintings/paintings.hbs', {paintings : allPaintingsFromDB, userInSession : req.session.currentUser})
     })
     .catch(err=>next(err))
 })
@@ -28,21 +33,32 @@ router.get('/paintings', (req, res, next) => {
 
 // GET route to display the form
 
-router.get('/paintings/create', (req, res) => res.render('paintings/new-painting.hbs'));
+router.get('/paintings/create', isLoggedIn, (req, res) => {
+  User.find()
+  .then((dbUsers) => {
+    res.render('paintings/new-painting.hbs', {dbUsers})
+  })
+  .catch((err) => console.log(`Err while displaying painting input page: ${err}`));
+});
 
 // POST route to save a new painting to the database in the paintings collection
 
-router.post('/paintings/create', fileUploader.single('painting-image'), (req, res, next) => {
-    // console.log(req.body);
-    const { title, author, size, year, description, starting_bid } = req.body;
+router.post('/paintings/create', isLoggedIn, fileUploader.single('painting-image'), (req, res, next) => {
+     //console.log(req.body);
+    const { title, size, year, description, starting_bid } = req.body;
 
-    if(!title || !author || !year || !req.file) {
+    if(!title || !year || !req.file) {
         res.render('paintings/new-painting.hbs', {errorMessage : "Please provide title, author, year and the painting image."});
     }
-   
-    Painting.create({ title, author, size, year, description, starting_bid, imageUrl: req.file.path })
-      // .then(paintingFromDB => console.log(`New painting created: ${paintingFromDB.title}.`))
-      .then((newlyCreatedPaintingFromDB) => res.redirect('/paintings'))
+   console.log(req.session.currentUser)
+    Painting.create({ title, author: req.session.currentUser._id, size, year, description, starting_bid, imageUrl: req.file.path })
+     
+      .then((newlyCreatedPaintingFromDB) => {
+        // Painting.findByIdAndUpdate(newlyCreatedPaintingFromDB.id, {author: req.session.currentUser.id })
+        // res.redirect('/userProfile')
+         return User.findByIdAndUpdate(req.session.currentUser._id, { $push: { paintings: newlyCreatedPaintingFromDB._id } });
+      })
+      .then(() => res.redirect('/userProfile'))
       .catch(err => {
         console.log(`ERROR creating Painting: ${err}`);
         res.redirect("/paintings/create");
@@ -107,8 +123,9 @@ router.post('/paintings/create', fileUploader.single('painting-image'), (req, re
 router.get("/paintings/:id", (req, res, next) => {
     const { id } = req.params;
     Painting.findById(id)
+      .populate('author')
       .then((painting) => {
-        res.render("paintings/painting-details", { painting });
+        res.render("paintings/painting-details", { painting, userInSession : req.session.currentUser });
       })
       .catch((err) => {
         console.log(`Error while displaying painting details: ${err}`);

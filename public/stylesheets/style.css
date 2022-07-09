@@ -105,3 +105,19 @@ ul li {
 #logout-form button {
   width: 120px;
 }
+
+#delete-painting-btn {
+  width: 100px;
+  height: 30px;
+  font-size: 15px;
+  color: #000;
+  background-color:#fff;
+}
+
+#login-and-bid-btn {
+  width: 200px;
+  height: 30px;
+  font-size: 15px;
+  color: #000;
+  background-color:#fff;
+}

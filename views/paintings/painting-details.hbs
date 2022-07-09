@@ -1,14 +1,31 @@
-<h2>{{painting.title}}</h2>
-<hr>
-<img src="{{painting.imageUrl}}" alt="{{painting.title}}">
-<h5>By: {{painting.author}}</h5>
-<p> Year: {{painting.year}}</p>
-<p>Size (w/h): {{painting.size}}</p>
-<p>Description: {{painting.description}}</p>
-<p>Starting bid: {{painting.starting_bid}}</p>
-<br>
-<a href="/paintings/{{painting._id}}/edit">Edit</a>
-<form action="/paintings/{{painting._id}}/delete" method="POST">
-<button>Delete</button>
-</form>
+<div class="col-md-4 mb-5">
+        <div class="card" style="width: 18rem;">
+        <h2>{{painting.title}}</h2>
+
+        <img src="{{painting.imageUrl}}" alt="{{painting.title}}">
+            <div class="card-body">
+                {{#each painting.author}}
+                <h5>{{this.username}}</h5>
+                {{/each}}
+                <p> Year: {{painting.year}}</p>
+                <p>Size (w/h): {{painting.size}}</p>
+                <p>Description: {{painting.description}}</p>
+                <p>Starting bid: {{painting.starting_bid}}</p>
+                <a href="/paintings/{{painting._id}}/edit">Edit</a>
+                <form action="/paintings/{{painting._id}}/delete" method="POST">
+                <button id="delete-painting-btn">Delete</button>
+                </form>
+
+                {{#unless userInSession}}
+                <form action="/login" method="POST">
+                <button id="login-and-bid-btn">Log in and bid</button>
+                </form>
+                {{else}}
+                <a href="/paintings">Put in a bid</a>
+                {{/unless}}
+
+
+            </div>
+        </div>
+    </div> 
 <a href="/paintings">Back</a>
