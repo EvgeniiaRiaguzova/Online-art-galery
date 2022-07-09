@@ -105,10 +105,27 @@ ul li {
   width: 120px;
 }
 
+
 #logo {
   width: 100px;
   height: 65px;
 }
 nav {
 padding: 0px 10px;
+
+#delete-painting-btn {
+  width: 100px;
+  height: 30px;
+  font-size: 15px;
+  color: #000;
+  background-color:#fff;
+}
+
+#login-and-bid-btn {
+  width: 200px;
+  height: 30px;
+  font-size: 15px;
+  color: #000;
+  background-color:#fff;
+
 }

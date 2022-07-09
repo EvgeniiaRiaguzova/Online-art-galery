@@ -96,7 +96,7 @@ router.post('/login', isLoggedOut, (req, res, next) => {
   //////////// U S E R  P R O F I L E ///////////
 
   router.get('/userProfile', [isLoggedIn, isAdmirer], (req, res) => {
-    console.log(req.session.currentUser)
+    //console.log(req.session.currentUser)
     res.render('users/user-profile', { userInSession: req.session.currentUser });
   });
 
