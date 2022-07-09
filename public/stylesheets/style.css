@@ -112,6 +112,7 @@ ul li {
 }
 nav {
 padding: 0px 10px;
+}
 
 #delete-painting-btn {
   width: 100px;
@@ -128,4 +129,8 @@ padding: 0px 10px;
   color: #000;
   background-color:#fff;
 
+}
+
+#painting-list {
+background-image: url("public/images/background/b2.png");
 }

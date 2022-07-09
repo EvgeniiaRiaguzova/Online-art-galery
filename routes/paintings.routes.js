@@ -134,4 +134,12 @@ router.get("/paintings/:id", (req, res, next) => {
       });
   });
 
+    // 6. Route for search painting
+
+    // router.post ("/paintings/search", (req, res, next) =>{
+    //   Painting.find({ $text : { $search : req.body }})
+    // })
+
+
+
   module.exports = router;
