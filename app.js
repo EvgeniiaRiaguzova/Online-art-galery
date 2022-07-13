@@ -24,6 +24,7 @@ const projectName = "online-art-gallery";
 
 app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
+
 // 👇 Start handling routes here
 
 const index = require("./routes/index.routes");
@@ -41,8 +42,13 @@ app.use('/', userRudRouter);
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
+
+/////// SEARCH TEXTBOX ///////
+
+
 // const Painting = require ('./models/Painting.model')
 
 // Painting.index({ title : 'text'})
+
 
 module.exports = app;

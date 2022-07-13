@@ -1,5 +1,11 @@
 body {
+  /* background-position: center; */
+  /* background-size: cover; */
   font: 12px 'Lucida Grande', Helvetica, Arial, sans-serif;
+  margin: 0 20px;
+  /* background-image: url("/images/background/b2v1.png"); */
+  /* background-color:antiquewhite; */
+  
 }
  
 a {
@@ -131,6 +137,17 @@ padding: 0px 10px;
 
 }
 
-#painting-list {
-background-image: url("public/images/background/b2.png");
-}
+ #paintingImg {
+   width: 179px;
+   height: 200px;
+ }
+
+ #welcomeUser {
+  text-align:left;
+  margin-top: 100px;
+  margin-bottom: 20px;
+ }
+
+ .user-details {
+  margin:0%;
+ }

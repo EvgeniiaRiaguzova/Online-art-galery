@@ -22,7 +22,7 @@ router.get('/paintings', (req, res, next) => {
     .populate("author")
     .then((allPaintingsFromDB) => {
         // console.log(allPaintingsFromDB)
-        res.render('paintings/paintings.hbs', {paintings : allPaintingsFromDB, userInSession : req.session.currentUser})
+        res.render('paintings/paintings.hbs', {paintings : allPaintingsFromDB})
     })
     .catch(err=>next(err))
 })
@@ -48,9 +48,9 @@ router.post('/paintings/create', isLoggedIn, fileUploader.single('painting-image
     const { title, size, year, description, starting_bid } = req.body;
 
     if(!title || !year || !req.file) {
-        res.render('paintings/new-painting.hbs', {errorMessage : "Please provide title, author, year and the painting image."});
+        res.render('paintings/new-painting.hbs', {errorMessage : "Please provide title, year and painting photo."});
     }
-   console.log(req.session.currentUser)
+   //console.log(req.session.currentUser)
     Painting.create({ title, author: req.session.currentUser._id, size, year, description, starting_bid, imageUrl: req.file.path })
      
       .then((newlyCreatedPaintingFromDB) => {
@@ -109,7 +109,7 @@ router.post('/paintings/create', isLoggedIn, fileUploader.single('painting-image
     const { id } = req.params;
     Painting.findByIdAndRemove(id)
       .then(() => {
-        res.redirect("/paintings");
+        res.redirect("/");
       })
       .catch((err) => {
         console.log(`Error while deleting a painting: ${err}`);
@@ -130,7 +130,7 @@ router.get("/paintings/:id", (req, res, next) => {
       })
       .catch((err) => {
         console.log(`Error while displaying painting details: ${err}`);
-        next(error);
+        next(err);
       });
   });
 
@@ -141,5 +141,14 @@ router.get("/paintings/:id", (req, res, next) => {
     // })
 
 
+  // 6. Route for search painting
+
+  router.get ("/paintings/search", (req, res, next) =>{
+    Painting.find({ title : req.query })
+    .then((foundPaintings) => {
+      res.render("paintings-search", foundPaintings)
+    })
+    .catch((err) => console.log(err))
+ })
 
   module.exports = router;

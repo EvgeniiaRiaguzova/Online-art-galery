@@ -1,20 +1,32 @@
 {{#if userInSession}}
-  <h2>Welcome, {{ userInSession.username }}!</h2>
-  <p>This is your profile page my friend!</p>
+     <h1 id="welcomeUser">Welcome, {{ userInSession.username }}!</h1>
   
-  <img src="{{userInSession.imageUrl}}" alt="{{userInSession.userName}}"/>
-  {{#unless userInSession.isAdmirer}}
-  <a href="/paintings/create">Add painting</a>
-  {{/unless}}
+  <div id="userPannel">
+  <img id="userAvatar" src="{{userInSession.imageUrl}}" alt="{{userInSession.userName}}"/> <br>
+  <p class="user-details">E-mail: {{userInSession.email}}</p> <br>
+  <p class="user-details"> Profile type: {{userInSession.status}}</p> <br>
+  <p>About me: {{userInSession.description}}</p>
+ 
+   <div id="userFunctions">
+     <a href="/users/{{userInSession._id}}/edit" class="btnUserFunction">Edit your profile</a>
+     <form action="/users/{{userInSession._id}}/delete" method="POST">
+       <button id="deleteProfile">Delete your profile</button>
+     </form>
+      {{#unless userInSession.isAdmirer}}
+      <a href="/paintings/create" class="btnUserFunction">Add painting</a>
+      {{/unless}}
+   </div>
+  </div>
+  
 
-<h3>Your paintings</h3>
- {{#each paintings}}
+<h2>Your paintings</h2>
+ {{#each userInSession.paintings}}
     <div class="col-md-4 mb-5">
         <div class="card" style="width: 18rem;">
-            <img src="{{userInSession.paintings}}" alt="{{title}}">
+            <img id="paintingImg" src="{{this.imageUrl}}" alt="{{this.title}}">
             <div class="card-body">
-                <h5 class="card-title">{{title}}</h5>
-                <p class="card-text">{{year}}</p>
+                <h5 class="card-title">{{this.title}}</h5>
+                <a href="/paintings/{{this._id}}">Details</a>
             </div>
         </div>
     </div>
