@@ -4,14 +4,14 @@
 
 {{#each paintings}}
     <div class="col-md-4 mb-5">
-        <div class="card" style="width: 18rem;">
+        <div style="width: 18rem;">
                        
             <img id="paintingImg" src="{{imageUrl}}" alt="{{title}}">
             <div class="card-body">
                 {{#each this.author}}
-                <h4><span>By </span>{{this.username}}</h4>
+                <h6><span>By </span>{{this.username}}</h6>
                 {{/each}}
-                <h5 class="card-title">{{title}}</h5>
+                <h6 class="card-title">{{title}}</h6>
                 <a href="/paintings/{{_id}}">Details</a>
                 </form>
             </div>

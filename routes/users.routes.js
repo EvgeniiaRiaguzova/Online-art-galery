@@ -7,10 +7,10 @@ const User = require('../models/User.model');
 // ********* require fileUploader in order to use it *********
 const fileUploader = require('../config/cloudinary.config');
 
-//////////// USERS-LIST ///////////
+//////////// ARTISTS-LIST ///////////
 
 router.get('/users-list', (req, res) => {
-    User.find(status)
+    User.find({status: "artist"})
       .then(usersFromDB => {
       console.log(usersFromDB);
       res.render('users/users-list.hbs', {users: usersFromDB });
@@ -50,7 +50,7 @@ router.get('/users-list', (req, res) => {
       .catch(error => console.log(`Error while updating a single user: ${error}`));
   });  
 
-  // /users/:id/paintings
+  ////// ROUTE /users/:id/paintings
 
   router.get('/users/:id/paintings', (req, res) => {
     const { id } = req.params;
@@ -58,7 +58,7 @@ router.get('/users-list', (req, res) => {
     User.findById(id)
     .populate('paintings')
     .then((user) => {
-      res.render('users/user-paintings', {user, paintings})
+      res.render('users/user-paintings', {user})
     })
   });
 

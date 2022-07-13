@@ -2,11 +2,13 @@
      <h1 id="welcomeUser">Welcome, {{ userInSession.username }}!</h1>
   
   <div id="userPannel">
-  <img id="userAvatar" src="{{userInSession.imageUrl}}" alt="{{userInSession.userName}}"/> <br>
-  <p class="user-details">E-mail: {{userInSession.email}}</p> <br>
-  <p class="user-details"> Profile type: {{userInSession.status}}</p> <br>
-  <p>About me: {{userInSession.description}}</p>
- 
+  <div class="user-profile-header">
+  <div class="user-details">
+    <img id="userAvatar" src="{{userInSession.imageUrl}}" alt="{{userInSession.userName}}"/>
+    <p class="user-details">E-mail: {{userInSession.email}}</p>
+    <p class="user-details">Profile type: {{userInSession.status}}</p>
+    <p class="user-details">About me: {{userInSession.description}}</p>
+ </div>
    <div id="userFunctions">
      <a href="/users/{{userInSession._id}}/edit" class="btnUserFunction">Edit your profile</a>
      <form action="/users/{{userInSession._id}}/delete" method="POST">
@@ -15,12 +17,10 @@
       {{#unless userInSession.isAdmirer}}
       <a href="/paintings/create" class="btnUserFunction">Add painting</a>
       {{/unless}}
-   </div>
+    </div>
   </div>
-  
-
-<h2>Your paintings</h2>
- {{#each userInSession.paintings}}
+      <h2>Your paintings</h2>
+       {{#each userInSession.paintings}}
     <div class="col-md-4 mb-5">
         <div class="card" style="width: 18rem;">
             <img id="paintingImg" src="{{this.imageUrl}}" alt="{{this.title}}">
@@ -33,16 +33,12 @@
 {{else}}
     <p>No paintings yet</p>
 {{/each}}
+   </div>
+  </div>
+  
 
-  <button>
-    <a href="/paintings">Paintings at auction</a>
-  </button>
 
-  <a href="/users/{{userInSession._id}}/edit" class="btn btn-primary">Edit your profile</a>
 
- <form action="/users/{{userInSession._id}}/delete" method="POST">
-      <button>Delete</button>
- </form>
 
 {{else}}
   

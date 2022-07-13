@@ -2,14 +2,19 @@ body {
   /* background-position: center; */
   /* background-size: cover; */
   font: 12px 'Lucida Grande', Helvetica, Arial, sans-serif;
+  /* font-family: Canva Sans,Noto Sans Variable,Noto Sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif; */
   margin: 0 20px;
   /* background-image: url("/images/background/b2v1.png"); */
   /* background-color:antiquewhite; */
   
 }
  
+h2{
+  text-align: center;
+  margin-bottom: 20px;
+ }
 a {
-  color: #00b7ff;
+  color: #02a3e2;
   text-decoration: none;
   font-size: 1.5em;
 }
@@ -35,21 +40,26 @@ form button {
   padding: 4px;
   width: 100%;
   margin-bottom: 20px;
+
 }
  
 form button {
-  background: #43a3e6;
+  background: rgb(230, 226, 226);
   border: 1px solid #43a3e6;
   border-radius: 4px;
-  color: #fff;
+  color: #43a3e6;
   cursor: pointer;
   display: inline-block;
-  font-size: 12px;
-  padding: 8px 14px;
+  font-size: 12px 0px;
   text-decoration: none;
-  text-transform: uppercase;
   transition: 0.3s ease background;
-  width: 100%;
+  width: 40%;
+  line-height: 20px;
+}
+
+#logoutBtn{
+  border: none;
+  background: white;
 }
  
 form button:hover {
@@ -68,22 +78,25 @@ form button:hover {
 }
  
 ul {
-  
-  height: 30px;
+  height: 10px;
   padding: 1em 0;
   list-style-type: none;
 }
  
 ul li {
-  line-height: 20px;
+  line-height: 10px;
 }
  
 #to-right {
-  padding: 1em;
+  padding: 2em;
   float: right;
 }
  
 #to-right span {
+  color: #43a3e6;
+  font-size: 1.5em;
+}
+#to-left span {
   color: #43a3e6;
   font-size: 1.5em;
 }
@@ -95,10 +108,24 @@ ul li {
  
 #to-left {
   float: left;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
- 
+
+#searchAndLink{
+  align-content: center;
+  display: flex;
+ flex-direction: row;
+ align-items: center;
+}
+
+.btn.btn-default{
+  margin: auto 30px auto 10px;
+}
+
 #to-left p a {
-  color: #000;
+  color: #43a3e6;
   font-weight: bold;
   font-size: 2em;
 }
@@ -108,23 +135,42 @@ ul li {
 }
  
 #logout-form button {
-  width: 120px;
+  width: 65px;
+  color: #00b7ff;
+  font-size: 1.5em;
 }
 
 
 #logo {
-  width: 100px;
-  height: 65px;
+  width: 130px;
+  height: 85px;
+  margin: 0px 30px 0px 10px;
 }
 nav {
-padding: 0px 10px;
+padding: 0px 10px 30px 10px;
+
+}
+.search-form {
+  display: flex;
+  width: 300px;
+  
+}
+
+.search-btn {
+  border:black;
+  padding: 0px 20px;
+}
+
+.artists-btn {
+  padding: 0px 30px;
+  height: 20px
 }
 
 #delete-painting-btn {
   width: 100px;
   height: 30px;
   font-size: 15px;
-  color: #000;
+  color: #00b7ff;
   background-color:#fff;
 }
 
@@ -132,22 +178,62 @@ padding: 0px 10px;
   width: 200px;
   height: 30px;
   font-size: 15px;
-  color: #000;
+  color:#00b7ff;
   background-color:#fff;
-
 }
+
+.main-part {
+  margin-top: 80px;
+  text-align: center;
+  font-size: 14px;
+}
+
+
+
+#userAvatar {
+  width: 200px;
+}
+
+#userFunctions {
+  padding-top: 30px;
+  text-decoration: none;
+}
+
+.btnUserFunction{
+  background: rgb(230, 226, 226);
+  border: 1px solid #43a3e6;
+  border-radius: 4px;
+  color: #43a3e6;
+  cursor: pointer;
+  padding: 6px;
+  font-size: 14px;
+  text-decoration: none;
+  width: 40%;
+  line-height: 20px;
+}
+ #deleteProfile{
+   margin-bottom: 0;
+ }
 
  #paintingImg {
    width: 179px;
    height: 200px;
  }
 
- #welcomeUser {
-  text-align:left;
-  margin-top: 100px;
-  margin-bottom: 20px;
- }
+/* #userAvatar {
+  width: 179px;
+  height: 200px;
+} */
 
- .user-details {
-  margin:0%;
- }
+#userPannel{
+padding-left: 20px;
+}
+
+.user-profile-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.img-painting-details {
+  width: 500px;
+}

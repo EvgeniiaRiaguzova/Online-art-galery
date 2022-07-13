@@ -20,16 +20,14 @@
         <li id="to-left">
          <a href="/"><img id="logo" src="/images/LogoSample_ByTailorBrands.png" alt="logo"></a>  
          <div id="searchAndLink">
-          <form action="/paintings/search" method="GET">
+          <form class="search-form" action="/paintings/search" method="GET">
               <input name="search" type="text" class="form-control" placeholder="Search">
-              <button type="submit" class="btn btn-default">Submit</button>
+              <button type="submit" class="search-btn">Submit</button>
           </form>
-        
-         <a href="/users-list">Artists</a> 
          </div>
+         <a href="/users-list" class="artists-btn">Artists</a> 
         </li>
         <li id="to-right">
-          <a href="/users-list">Artists</a> <span> | </span>
           <a href="/signup">Signup</a> <span> | </span>
           <a href="/login">Login</a> <span> | </span>
   <form id="logout-form" action="/logout" method="POST">
