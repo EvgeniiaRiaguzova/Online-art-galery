@@ -1,5 +1,5 @@
 {
-  "name": "online-art-galery",
+  "name": "online-art-gallery",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -27,5 +27,8 @@
   },
   "engines": {
     "node": "12.x"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
   }
 }
