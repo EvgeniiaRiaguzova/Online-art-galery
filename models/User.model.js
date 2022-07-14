@@ -26,6 +26,10 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'Password is required.']
   },
+  imageUrl: {
+    type: String
+  },
+  description: String,
   paintings: [{type: Schema.Types.ObjectId, ref: "Painting"}]
 });
 

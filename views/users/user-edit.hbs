@@ -1,0 +1,37 @@
+<div id="form">
+
+  <form action="/users/{{_id}}/edit" method="post" enctype="multipart/form-data">
+   <h2>Update your profile</h2>
+    <label> Username
+      <input type="text" name="username" value="{{username}}" />
+    </label>
+    <label> Email
+      <input type="email" name="email" value="{{email}}" />
+    </label>
+    <label> Password
+      <input type="password" name="password" />
+    </label>
+    <label> Status:
+      <select type="status" name="status" id="status">
+        <option name="existingStatus" value="{{status}}"></option>
+          <option value="owner">Owner</option>
+          <option value="artist">Artist</option>
+          <option value="art-admirer">Art-admirer</option>
+      </select>
+    </label>
+    <label for="userAvatar">Your portret:
+      <input type="file" name="userAvatar" />
+      <input type="text" name="existingImage" hidden value="{{imageUrl}}">
+    </label>
+    <label> About me:
+    <textarea name="description" cols="30" rows="3">{{description}}
+    </textarea>
+  </label>
+    <button type="submit">Update account</button>
+ 
+      {{#if errorMessage}}
+         <p class="error">{{errorMessage}}</p>
+      {{/if}}
+  </form>
+</div>
+

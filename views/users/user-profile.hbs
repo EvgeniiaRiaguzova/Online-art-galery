@@ -1,15 +1,34 @@
 {{#if userInSession}}
-  <h2>Welcome, {{ userInSession.username }}!</h2>
-  <p>This is your profile page my friend! {{userInSession.isAdmirer}}</p>
-  
+     <h2>Welcome, {{ userInSession.username }}!</h2>
+  <p>This is your profile page, my friend!</p>
+  <div id="userPannel">
+  <img id="userAvatar" src="{{userInSession.imageUrl}}" alt="{{userInSession.userName}}"/>
   {{#unless userInSession.isAdmirer}}
-  <a href="/paintings/create">Add painting</a>
+   <div id="userFunctions">
+     <a href="/users/{{userInSession._id}}/edit" class="btnUserFunction">Edit your profile</a>
+     <form action="/users/{{userInSession._id}}/delete" method="POST">
+       <button id="deleteProfile">Delete your profile</button>
+     </form>
+     <a href="/paintings/create" class="btnUserFunction">Add painting</a>
+   </div>
+  </div>
   {{/unless}}
-  <button>
-    <a href="/userProfile">Reload the page</a>
-  </button>
+
+<h2>Your paintings</h3>
+ {{#each paintings}}
+    <div class="col-md-4 mb-5">
+        <div class="card" style="width: 18rem;">
+            <img id="paintingImg" src="{{req.session.currentUser._id.paintings}}" alt="{{title}}">
+            <div class="card-body">
+                <h5 class="card-title">{{title}}</h5>
+                <p class="card-text">{{year}}</p>
+            </div>
+        </div>
+    </div>
 {{else}}
-  
+    <p>No paintings yet</p>
+{{/each}}
+
+{{else}}
   <br><p>Still no logged in user, sorry!</p>
- 
 {{/if}}

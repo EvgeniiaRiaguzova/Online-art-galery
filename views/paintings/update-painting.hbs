@@ -1,0 +1,37 @@
+<h2>Update data for painting: {{painting.title}}</h2>
+
+<form action="/paintings/{{painting._id}}/edit" method="post" enctype="multipart/form-data">
+    
+    <label> Title:
+    <input type="text" name="title" value="{{painting.title}}"/>
+  </label>
+ 
+  <label> Author:
+    <input type="text" name="author" value="{{painting.author}}"/>
+  </label>
+
+  <label> Size (w/h):
+    <input type="text" name="size" value="{{painting.size}}"/>
+  </label>  
+
+  <label> Year:
+    <input type="text" name="year" value="{{painting.year}}"/>
+  </label>
+ 
+  <label> Description:
+    <textarea name="description" cols="30" rows="3">{{painting.description}}</textarea>
+  </label>
+
+  <label> Starting bid:
+    <input type="text" name="starting_bid" value="{{painting.starting_bid}}"/>
+  </label>
+
+  <label> Painting:
+    <input type="file" name="painting-image" />
+    <input type="text" name="existingImage" hidden value="{{imageUrl}}">
+  </label>
+
+    <button type="submit">Save changes</button>
+</form>
+
+<a href="/paintings">Back</a>
