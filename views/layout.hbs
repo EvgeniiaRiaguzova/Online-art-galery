@@ -13,8 +13,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
       <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" /> {{!-- has to be added --}}
       <link rel="stylesheet" href="/stylesheets/style.css" />
-      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" /> 
-      <link rel="stylesheet" href="/stylesheets/style.css" />
+
    </head>
 
    <body>
@@ -22,12 +21,16 @@
     <nav>
       <ul>
         <li id="to-left">
-         <a href="/"><img id="logo" src="images/LogoSample_ByTailorBrands.png" alt="logo"></a>  
+
+         <a href="/"><img id="logo" src="/images/LogoSample_ByTailorBrands.png" alt="logo"></a>  
          <div id="searchAndLink">
-          <input type="text" class="form-control" placeholder="Search">
-        <button type="submit" class="btn btn-default">Submit</button>
-         <a href="/users-list">Artists</a> 
+          <form class="search-form" action="/paintings/search" method="GET">
+              <input name="search" type="text" class="form-control" placeholder="Search">
+              <button type="submit" class="btn btn-default">Submit</button>
+          </form>
          </div>
+         <a href="/users-list" class="artists-btn">Artists</a> 
+
         </li>
         <li id="to-right">
           <a href="/signup">Signup</a> <span> | </span>
@@ -39,7 +42,9 @@
         </li>
       </ul>
     </nav>
+
   <div class="main-part">
+
       {{{body}}}
   </div> 
       <script src="/js/script.js"></script>

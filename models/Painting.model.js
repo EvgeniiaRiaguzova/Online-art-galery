@@ -21,7 +21,7 @@ const paintingSchema = new Schema (
         
         description: String,
 
-        starting_bid: String, // € 50
+        //starting_bid: String, // € 50
 
         imageUrl: {
             type: String,
