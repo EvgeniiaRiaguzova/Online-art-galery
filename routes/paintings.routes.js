@@ -157,23 +157,19 @@ router.get("/paintings/:id", (req, res, next) => {
     Painting.findById(id)
       .populate('author')
       .then((painting) => {
-
-        // painting.author.forEach((elem) =>
-        // if(req.session.currentUser._id ===elem.._id) {
-
-        // }
-  
-
-        res.render("paintings/painting-details", { painting, userInSession : req.session.currentUser });
+        painting.author.forEach((elem) => {
+        if(req.session.currentUser._id === elem._id.toHexString()) {
+          req.session.isAuthor = true;
+        } else {
+          req.session.isAuthor = false;
+        }
+      })
+        res.render("paintings/painting-details", { painting, userInSession : req.session.currentUser, isAuthor: req.session.isAuthor } );
       })
       .catch((err) => {
         console.log(`Error while displaying painting details: ${err}`);
         next(err);
       });
   });
-
-
-
-
 
   module.exports = router;
