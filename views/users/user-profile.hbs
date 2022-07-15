@@ -3,17 +3,18 @@
   <p>This is your profile page, my friend!</p>
   <div id="userPannel">
   <img id="userAvatar" src="{{userInSession.imageUrl}}" alt="{{userInSession.userName}}"/>
-  {{#unless userInSession.isAdmirer}}
-   <div id="userFunctions">
+<div id="userFunctions">
      <a href="/users/{{userInSession._id}}/edit" class="btnUserFunction">Edit your profile</a>
      <form action="/users/{{userInSession._id}}/delete" method="POST">
        <button id="deleteProfile">Delete your profile</button>
      </form>
+  {{#unless userInSession.isAdmirer}}
+   
      <a href="/paintings/create" class="btnUserFunction">Add painting</a>
-   </div>
-  </div>
+   
   {{/unless}}
-
+</div>
+  </div>
 <h2>Your paintings</h3>
  {{#each paintings}}
     <div class="col-md-4 mb-5">
