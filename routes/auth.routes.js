@@ -40,7 +40,7 @@ router.post('/signup',[isLoggedOut, fileUploader.single('userAvatar')] , (req, r
             //     |            |--> this is placeholder (how we named returning value from the previous method (.hash()))
             password: hashedPassword,
             status,
-           imageUrl: req.file.path,
+            imageUrl: req.file.path,
             description
           });
         })
@@ -53,7 +53,7 @@ router.post('/signup',[isLoggedOut, fileUploader.single('userAvatar')] , (req, r
               res.status(500).render('auth/signup', { errorMessage: error.message });
             } else if (error.code === 11000) {
               res.status(500).render('auth/signup', {
-                 errorMessage: 'Username and email need to be unique. Either username or email is already used.'
+              errorMessage: 'Username and email need to be unique. Either username or email is already used.'
               });
             } else {
               next(error);
@@ -104,7 +104,7 @@ router.post('/login', isLoggedOut, (req, res, next) => {
     .populate('paintings')
     .then((user) => { 
       req.session.currentUser = user;
-      res.render('users/user-profile', { userInSession: req.session.currentUser })
+      res.render('users/user-profile', { userInSession: req.session.currentUser, isAdmirer: req.session.isAdmirer })
     })
   });
 

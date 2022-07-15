@@ -3,12 +3,12 @@
  {{#each foundPaintings}}
     <div class="col-md-4 mb-5">
         <div class="card" style="width: 18rem;">
-            <img src="{{imageUrl}}" alt="{{title}}">
+            <img src="{{this.imageUrl}}" alt="{{this.title}}">
             <div class="card-body">
                 {{#each this.author}}
-                <h5>by: {{this.title}}</h5>
+                <h5>by: {{this.username}}</h5>
                 {{/each}}
-                <a href="/paintings/{{_id}}">Details</a>
+                <a href="/paintings/{{this._id}}">Details</a>
             </div>
         </div>
     </div>

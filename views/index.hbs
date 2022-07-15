@@ -1,25 +1,25 @@
 
 
-<div id="painting-list">
+<div class="main-page-paingings">
+        {{!-- "col-md- mb-5" --}}
+    {{#each paintings}}
 
-{{#each paintings}}
-    <div class="col-md-4 mb-5">
-        <div style="width: 18rem;">
-                       
-            <img id="paintingImg" src="{{imageUrl}}" alt="{{title}}">
-            <div class="card-body">
-                {{#each this.author}}
-                <h6><span>By </span>{{this.username}}</h6>
-                {{/each}}
-                <h6 class="card-title">{{title}}</h6>
-                <a href="/paintings/{{_id}}">Details</a>
-                </form>
+            <div style="width: 20rem; padding: 30px">
+                        
+                <img id="paintingImg" src="{{imageUrl}}" alt="{{title}}">
+                <div class="card-body">
+                    {{#each this.author}}
+                    <h6><span>By </span>{{this.username}}</h6>
+                    {{/each}}
+                    <h6 class="card-title">{{title}}</h6>
+                    <a href="/paintings/{{_id}}">Details</a>
+                    </form>
+                </div>
             </div>
-        </div>
-    </div>
 
-{{else}}
-    <p>No paintings yet</p>
-{{/each}}
+
+    {{else}}
+        <p>No paintings yet</p>
+    {{/each}}
 
 </div>

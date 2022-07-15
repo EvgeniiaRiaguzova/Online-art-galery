@@ -117,24 +117,20 @@ router.post('/paintings/create', isLoggedIn, fileUploader.single('painting-image
       });
   });
 
-  // 5. Each painting details page / Read
-
-// GET route to retrieve and display details of a specific painting
-
-router.get("/paintings/:id", (req, res, next) => {
-    const { id } = req.params;
-    Painting.findById(id)
-      .populate('author')
-      .then((painting) => {
-        res.render("paintings/painting-details", { painting, userInSession : req.session.currentUser });
-      })
-      .catch((err) => {
-        console.log(`Error while displaying painting details: ${err}`);
-        next(err);
-      });
-  });
-
     // 6. Route for search painting
+
+    router.get ("/paintings/search", (req, res, next) =>{
+      // console.log(req.query.search);
+      Painting.find({ title : req.query.search })
+      .populate('author')
+      .then((foundPaintings) => {
+        res.render("paintings/paintings-search", {foundPaintings})
+      })
+      .catch((err) => console.log(err))
+      
+   })
+
+  // 6. Route for search painting
 
     // router.post ("/paintings/search", (req, res, next) =>{
     //   Painting.find({ $text : { $search : req.body }})
@@ -143,12 +139,41 @@ router.get("/paintings/:id", (req, res, next) => {
 
   // 6. Route for search painting
 
-  router.get ("/paintings/search", (req, res, next) =>{
-    Painting.find({ title : req.query })
-    .then((foundPaintings) => {
-      res.render("paintings-search", foundPaintings)
-    })
-    .catch((err) => console.log(err))
- })
+//   router.get ("/paintings/search", (req, res, next) =>{
+//     Painting.find({ title : req.query })
+//     .then((foundPaintings) => {
+//       res.render("paintings-search", foundPaintings)
+//     })
+//     .catch((err) => console.log(err))
+//  })
+
+  
+// 5. Each painting details page / Read
+
+// GET route to retrieve and display details of a specific painting
+
+router.get("/paintings/:id", (req, res, next) => {
+    const { id } = req.params;
+    Painting.findById(id)
+      .populate('author')
+      .then((painting) => {
+
+        // painting.author.forEach((elem) =>
+        // if(req.session.currentUser._id ===elem.._id) {
+
+        // }
+  
+
+        res.render("paintings/painting-details", { painting, userInSession : req.session.currentUser });
+      })
+      .catch((err) => {
+        console.log(`Error while displaying painting details: ${err}`);
+        next(err);
+      });
+  });
+
+
+
+
 
   module.exports = router;
