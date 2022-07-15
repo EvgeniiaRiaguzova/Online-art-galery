@@ -7,7 +7,8 @@ const mongoose = require("mongoose");
 
 const MONGO_URI = process.env.MONGODB_URI || "mongodb://localhost/online-art-gallery";
 
-mongoose
+//require('dotenv').config();
+/*mongoose
   .connect(MONGO_URI)
   .then((x) => {
     console.log(
@@ -16,4 +17,9 @@ mongoose
   })
   .catch((err) => {
     console.error("Error connecting to mongo: ", err);
-  });
+  });*/
+
+  mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(x => console.log(`Connected the Database: "${x.connections[0].name}"`))
+  .catch(err => console.error('Error connecting to mongo', err)); 
