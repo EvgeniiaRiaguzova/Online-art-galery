@@ -12,15 +12,16 @@ background-position: center;
 </style>
 <div class="col-md-4 mb-5">
     <div  style="width: 18rem;">
-    <h4 style="padding: 15px">{{painting.title}}</h4>
+    
 
         <div class="painting-details">
             <div>
             <img class="img-painting-details" src="{{painting.imageUrl}}" alt="{{painting.title}}">
             </div>
-            <div class="card-body">
+            <div id="paintingInfo" class="card-body">
+              <h3 id = "paintingTitle">{{painting.title}}</h3>
                 {{#each painting.author}}
-                <h6>By: {{this.username}}</h6>
+                <h4>By: {{this.username}}</h4>
                 {{/each}}
                 <p style="font-size: 15px">Year: {{painting.year}}</p>
                 <p style="font-size: 15px">Size (w/h): {{painting.size}}</p>
@@ -28,7 +29,7 @@ background-position: center;
                 {{!-- <p>Starting bid: {{painting.starting_bid}}</p> --}}
 
                 {{#if isAuthor}}
-                <a href="/paintings/{{painting._id}}/edit">Edit</a>
+                <a id="editPaintingLink" href="/paintings/{{painting._id}}/edit">Edit</a>
                 <form action="/paintings/{{painting._id}}/delete" method="POST">
                 <button id="delete-painting-btn">Delete</button>
                 </form>
@@ -41,7 +42,6 @@ background-position: center;
                 {{else}}
                 <a href="/paintings">Put in a bid</a>
                 {{/unless}} --}}
-
             </div>
         </div>
     </div>
