@@ -5,13 +5,12 @@
         <div class="card" style="width: 18rem;">
             <img src="{{imageUrl}}" alt="{{title}}">
             <div class="card-body">
-                {{#each paintings.author}}
-                <p>by: {{this.username}}</p>
+                {{#each this.author}}
+                <h5>by: {{this.username}}</h5>
                 {{/each}}
                 <h5 class="card-title">{{title}}</h5>
                 <p class="card-text">{{year}}</p>
                 <a href="/paintings/{{_id}}">Details</a>
-                </form>
             </div>
         </div>
     </div>
