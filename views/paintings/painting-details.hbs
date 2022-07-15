@@ -27,12 +27,12 @@ background-position: center;
                 <p style="font-size: 15px">Description: {{painting.description}}</p>
                 {{!-- <p>Starting bid: {{painting.starting_bid}}</p> --}}
 
-                {{!-- {{#if userInSession.isAuthor}} --}}
+                {{#if isAuthor}}
                 <a href="/paintings/{{painting._id}}/edit">Edit</a>
                 <form action="/paintings/{{painting._id}}/delete" method="POST">
                 <button id="delete-painting-btn">Delete</button>
                 </form>
-                {{!-- {{/if}} --}}
+                {{/if}}
 
                 {{!-- {{#unless userInSession}}
                 <form action="/login" method="POST">
