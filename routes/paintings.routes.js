@@ -159,7 +159,7 @@ router.get("/paintings/:id", (req, res, next) => {
       .populate('author')
       .then((painting) => {
         painting.author.forEach((elem) => {
-        if(req.session.currentUser._id === elem._id.toHexString()) {
+        if(req.session.currentUser !== undefined && req.session.currentUser._id === elem._id.toHexString()) {
           req.session.isAuthor = true;
         } else {
           req.session.isAuthor = false;
