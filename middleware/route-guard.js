@@ -17,7 +17,7 @@ const isLoggedIn = (req, res, next) => {
   
   const isAdmirer = (req, res, next) => { 
     if (req.session.currentUser.status == "art-admirer") {
-        req.session.currentUser.isAdmirer = true
+        req.session.isAdmirer = true
       }
       next();
   }

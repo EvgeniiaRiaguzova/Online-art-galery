@@ -1,3 +1,4 @@
+
 body {
   /* background-position: center;
   background-size: cover; */
@@ -6,7 +7,7 @@ body {
   margin: 0 20px;
   /* background-image: url("/images/background/b2v1.png"); */
   /* background-color:antiquewhite; */
-  
+  padding: 0;
 }
  
 h2{
@@ -123,10 +124,12 @@ ul li {
   display: flex;
  flex-direction: row;
  align-items: center;
+
 }
 
 .btn.btn-default{
   margin: 0 30px auto 10px;
+  font-size: 10px;
 }
 
 #to-left p a {
@@ -174,6 +177,7 @@ border-bottom: #666;
 .search-btn {
   border:black;
   padding: 0px 20px;
+  
 }
 
 .artists-btn {
@@ -226,6 +230,7 @@ border-bottom: #666;
 #userFunctions {
   padding-top: 30px;
   text-decoration: none;
+  text-align: left;
 }
 
 .btnUserFunction{
@@ -242,7 +247,10 @@ border-bottom: #666;
 }
  #deleteProfile{
    margin-bottom: 0;
+   text-align: left;
+   width: 130px;
  }
+
 
  #paintingImg {
    width: 200px;
@@ -261,7 +269,7 @@ padding-left: 20px;
 
 .user-profile-header {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .img-painting-details {
@@ -270,6 +278,7 @@ padding-left: 20px;
 
 .painting-details {
   display: flex;
+  width: 50vw;
 }
 
 .main-page-paingings{
@@ -285,6 +294,7 @@ padding-left: 20px;
   flex-direction: column;
 align-items: flex-start;
 padding-left: 30px;
+width: 30vw;
 }
 
 #paintingTitle{
@@ -295,4 +305,60 @@ padding-left: 30px;
 }
 #amoutMeLable{
   margin-bottom: 10px;
+}
+
+.card{
+  border: #fff;
+  display: flex;
+  justify-content: left;
+}
+
+
+.card-img-top {
+  height: 180px;
+  width: 180px;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: bold;
+  /* font-style: italic; */
+  text-align: center;
+}
+
+.card-link {
+  font-size: 17px;
+}
+
+.row{
+  display: flex;
+  justify-content: left;
+
+}
+
+.column{
+  padding: 20px;
+}
+
+.column-user-profile{
+border-top: #f02b63;
+
+}
+
+.form-control {
+  font-size: 10px;
+}
+
+.user-details {
+  text-align: left;
+}
+
+.row-paintings {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+}
+
+.col{
+flex-grow: 0;
 }

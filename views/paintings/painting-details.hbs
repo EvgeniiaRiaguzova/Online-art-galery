@@ -1,11 +1,11 @@
 <style>
 body {
-background-position: center;
+/* background-position: center;
   background-size: cover;
   font: 12px 'Lucida Grande', Helvetica, Arial, sans-serif;
   /* font-family: Canva Sans,Noto Sans Variable,Noto Sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif; */
-  margin: 0 20px;
-    background-image: url("/images/background/b2v1.png");
+  /* margin: 0 20px;
+    background-image: url("/images/background/b8.png");
   /* background-color:antiquewhite; */
   
 }
@@ -18,7 +18,7 @@ background-position: center;
             <div>
             <img class="img-painting-details" src="{{painting.imageUrl}}" alt="{{painting.title}}">
             </div>
-            <div id="paintingInfo" class="card-body">
+            <div id="paintingInfo">
               <h3 id = "paintingTitle">{{painting.title}}</h3>
                 {{#each painting.author}}
                 <h4>By: {{this.username}}</h4>
@@ -46,4 +46,4 @@ background-position: center;
         </div>
     </div>
 </div> 
-<a href="/">Back</a>
+
