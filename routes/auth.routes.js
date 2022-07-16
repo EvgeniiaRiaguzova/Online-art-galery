@@ -13,19 +13,20 @@ const fileUploader = require('../config/cloudinary.config');
 router.get('/signup', isLoggedOut, (req, res) => res.render('auth/signup'));
 // POST route ==> to process form data
 router.post('/signup',[isLoggedOut, fileUploader.single('userAvatar')] , (req, res, next) => {
-   console.log(req.file);
+   //console.log(req.file);
+
   const { username, email, password, status, description} = req.body;
     if (!username || !email || status =="" || !password) {
         res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email, status and password.' });
         return;
       }
-      const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
-      if (!regex.test(password)) {
-        res
-          .status(500)
-          .render('auth/signup', { errorMessage: 'Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter.' });
-        return;
-      }
+    const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
+    if (!regex.test(password)) {
+      res
+        .status(500)
+        .render('auth/signup', { errorMessage: 'Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter.' });
+      return;
+    }
 
   bcryptjs
     .genSalt(saltRounds)
@@ -39,7 +40,7 @@ router.post('/signup',[isLoggedOut, fileUploader.single('userAvatar')] , (req, r
             //     |            |--> this is placeholder (how we named returning value from the previous method (.hash()))
             password: hashedPassword,
             status,
-           imageUrl: req.file.path,
+            imageUrl: req.file.path,
             description
           });
         })
@@ -52,7 +53,7 @@ router.post('/signup',[isLoggedOut, fileUploader.single('userAvatar')] , (req, r
               res.status(500).render('auth/signup', { errorMessage: error.message });
             } else if (error.code === 11000) {
               res.status(500).render('auth/signup', {
-                 errorMessage: 'Username and email need to be unique. Either username or email is already used.'
+              errorMessage: 'Username and email need to be unique. Either username or email is already used.'
               });
             } else {
               next(error);
@@ -79,6 +80,7 @@ router.post('/login', isLoggedOut, (req, res, next) => {
     }
    
     User.findOne({ email })
+    .populate('paintings')
       .then(user => {
         if (!user) {
           res.render('auth/login', { errorMessage: 'Email is not registered. Try with other email.' });
@@ -96,8 +98,14 @@ router.post('/login', isLoggedOut, (req, res, next) => {
   //////////// U S E R  P R O F I L E ///////////
 
   router.get('/userProfile', [isLoggedIn, isAdmirer], (req, res) => {
-    //console.log(req.session.currentUser)
-    res.render('users/user-profile', { userInSession: req.session.currentUser });
+    let userId = req.session.currentUser._id;
+
+    User.findById(userId)
+    .populate('paintings')
+    .then((user) => { 
+      req.session.currentUser = user;
+      res.render('users/user-profile', { userInSession: req.session.currentUser, isAdmirer: req.session.isAdmirer })
+    })
   });
 
   //////////// L O G O U T ///////////

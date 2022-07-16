@@ -21,7 +21,7 @@ const paintingSchema = new Schema (
         
         description: String,
 
-        starting_bid: String, // € 50
+        //starting_bid: String, // € 50
 
         imageUrl: {
             type: String,
@@ -32,6 +32,8 @@ const paintingSchema = new Schema (
         timestamps: true
     }
 )
+
+paintingSchema.index({'$**' : 'text'});
 
 const Painting = model('Painting', paintingSchema)
 module.exports = Painting

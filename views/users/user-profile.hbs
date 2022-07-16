@@ -1,34 +1,66 @@
-{{#if userInSession}}
-     <h2>Welcome, {{ userInSession.username }}!</h2>
-  <p>This is your profile page, my friend!</p>
-  <div id="userPannel">
-  <img id="userAvatar" src="{{userInSession.imageUrl}}" alt="{{userInSession.userName}}"/>
-  {{#unless userInSession.isAdmirer}}
-   <div id="userFunctions">
-     <a href="/users/{{userInSession._id}}/edit" class="btnUserFunction">Edit your profile</a>
-     <form action="/users/{{userInSession._id}}/delete" method="POST">
-       <button id="deleteProfile">Delete your profile</button>
-     </form>
-     <a href="/paintings/create" class="btnUserFunction">Add painting</a>
-   </div>
-  </div>
-  {{/unless}}
+<style>
+  h1{
+    text-align: left;
+    padding: 10px;
+  }
+</style>
 
-<h2>Your paintings</h3>
- {{#each paintings}}
-    <div class="col-md-4 mb-5">
-        <div class="card" style="width: 18rem;">
-            <img id="paintingImg" src="{{req.session.currentUser._id.paintings}}" alt="{{title}}">
-            <div class="card-body">
-                <h5 class="card-title">{{title}}</h5>
-                <p class="card-text">{{year}}</p>
-            </div>
+{{#if userInSession}}
+
+     <h1 id="welcomeUser">Welcome, {{ userInSession.username }}!</h1>
+  
+<div id="userPannel">
+  <div class="row">
+    <div class="user-profile-header">
+      <div class="user-details">
+        <img id="userAvatar" src="{{userInSession.imageUrl}}" alt="{{userInSession.userName}}"/>
+        <p class="user-details"> <span style="font-weight:bold">E-mail:</span> {{userInSession.email}}</p>
+        <p class="user-details"><span style="font-weight:bold">Profile type:</span> {{userInSession.status}}</p>
+        <p class="user-details"><span style="font-weight:bold">About me:</span> <span style="font-style:italic">{{userInSession.description}}</span></p>
+      </div>
+      <div id="userFunctions">
+        <a href="/users/{{userInSession._id}}/edit" class="btnUserFunction">Edit your profile</a>
+        <form class="form-delete" action="/users/{{userInSession._id}}/delete" method="POST">
+          <button id="deleteProfile">Delete your profile</button>
+        </form>
+          {{#unless isAdmirer}}
+          <a href="/paintings/create" class="btnUserFunction">Add painting</a>
+          {{/unless}}
         </div>
     </div>
-{{else}}
-    <p>No paintings yet</p>
-{{/each}}
 
+    <div class="column-artworks">
+        {{#unless isAdmirer}}
+
+        <div>
+        <h2 style="margin:0; padding:0;">Artworks</h2>
+        </div>
+
+        <div class="row-paintings">
+          {{#each userInSession.paintings}}
+          
+            <div class="card" style="width: 18rem; margin: 10px">
+                <img id="paintingImg" src="{{this.imageUrl}}" alt="{{this.title}}">
+                <div class="card-body">
+                    <h5 class="card-title">{{this.title}}</h5>
+                    <a class="card-link" href="/paintings/{{this._id}}">Details</a>
+                </div>
+            </div>
+          
+          {{else}}
+              <p>No paintings yet</p>
+          {{/each}}
+          </div>
+        {{/unless}}
+    </div>
+  </div>
+  
+</div>
+
+  
 {{else}}
-  <br><p>Still no logged in user, sorry!</p>
+  
+  <br><p>User not logged in</p>
+ 
 {{/if}}
+

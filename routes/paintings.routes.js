@@ -22,7 +22,7 @@ router.get('/paintings', (req, res, next) => {
     .populate("author")
     .then((allPaintingsFromDB) => {
         // console.log(allPaintingsFromDB)
-        res.render('paintings/paintings.hbs', {paintings : allPaintingsFromDB, userInSession : req.session.currentUser})
+        res.render('paintings/paintings.hbs', {paintings : allPaintingsFromDB})
     })
     .catch(err=>next(err))
 })
@@ -48,9 +48,9 @@ router.post('/paintings/create', isLoggedIn, fileUploader.single('painting-image
     const { title, size, year, description, starting_bid } = req.body;
 
     if(!title || !year || !req.file) {
-        res.render('paintings/new-painting.hbs', {errorMessage : "Please provide title, author, year and the painting image."});
+        res.render('paintings/new-painting.hbs', {errorMessage : "Please provide title, year and painting photo."});
     }
-   console.log(req.session.currentUser)
+   //console.log(req.session.currentUser)
     Painting.create({ title, author: req.session.currentUser._id, size, year, description, starting_bid, imageUrl: req.file.path })
      
       .then((newlyCreatedPaintingFromDB) => {
@@ -109,7 +109,7 @@ router.post('/paintings/create', isLoggedIn, fileUploader.single('painting-image
     const { id } = req.params;
     Painting.findByIdAndRemove(id)
       .then(() => {
-        res.redirect("/paintings");
+        res.redirect("/");
       })
       .catch((err) => {
         console.log(`Error while deleting a painting: ${err}`);
@@ -117,7 +117,39 @@ router.post('/paintings/create', isLoggedIn, fileUploader.single('painting-image
       });
   });
 
-  // 5. Each painting details page / Read
+    // 6. Route for search painting
+
+  //   router.get ("/paintings/search", (req, res, next) =>{
+  //     // console.log(req.query.search);
+  //     Painting.find({ title : req.query.search })
+  //     .populate('author')
+  //     .then((foundPaintings) => {
+  //       res.render("paintings/paintings-search", {foundPaintings})
+  //     })
+  //     .catch((err) => console.log(err))
+      
+  //  })
+
+  // 6. Route for search painting
+
+    // router.post ("/paintings/search", (req, res, next) =>{
+    //   Painting.find({ $text : { $search : req.body }})
+    // })
+
+
+  // 6. Route for search painting
+
+  router.get ("/paintings/search", (req, res, next) =>{
+    Painting.find({ $text : { $search : req.query.search }})
+    .populate('author')
+    .then((foundPaintings) => {
+      res.render("paintings/paintings-search", {foundPaintings})
+    })
+    .catch((err) => console.log(err))
+ })
+
+  
+// 5. Each painting details page / Read
 
 // GET route to retrieve and display details of a specific painting
 
@@ -126,11 +158,18 @@ router.get("/paintings/:id", (req, res, next) => {
     Painting.findById(id)
       .populate('author')
       .then((painting) => {
-        res.render("paintings/painting-details", { painting, userInSession : req.session.currentUser });
+        painting.author.forEach((elem) => {
+        if(req.session.currentUser._id === elem._id.toHexString()) {
+          req.session.isAuthor = true;
+        } else {
+          req.session.isAuthor = false;
+        }
+      })
+        res.render("paintings/painting-details", { painting, userInSession : req.session.currentUser, isAuthor: req.session.isAuthor } );
       })
       .catch((err) => {
         console.log(`Error while displaying painting details: ${err}`);
-        next(error);
+        next(err);
       });
   });
 

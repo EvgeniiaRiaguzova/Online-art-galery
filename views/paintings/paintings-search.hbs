@@ -1,0 +1,23 @@
+<style>
+    h2 {
+        text-align: left;
+    }
+</style>
+
+<h2>Results found</h2>
+ 
+ {{#each foundPaintings}}
+    <div class="column">
+        <div class="card" style="width: 25rem;">
+            <img src="{{this.imageUrl}}" alt="{{this.title}}">
+            <div class="card-body">
+                {{#each this.author}}
+                <h3>by: {{this.username}}</h3>
+                {{/each}}
+                <a class="card-link" href="/paintings/{{this._id}}">Details</a>
+            </div>
+        </div>
+    </div>
+{{else}}
+    <p>No paintings found</p>
+{{/each}}
