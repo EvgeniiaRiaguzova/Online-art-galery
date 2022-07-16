@@ -33,5 +33,7 @@ const paintingSchema = new Schema (
     }
 )
 
+paintingSchema.index({'$**' : 'text'});
+
 const Painting = model('Painting', paintingSchema)
 module.exports = Painting

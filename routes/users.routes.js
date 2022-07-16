@@ -12,7 +12,7 @@ const fileUploader = require('../config/cloudinary.config');
 router.get('/users-list', (req, res) => {
     User.find({status: "artist"})
       .then(usersFromDB => {
-      console.log(usersFromDB);
+      //console.log(usersFromDB);
       res.render('users/users-list.hbs', {users: usersFromDB });
       })
       .catch(err => console.log(`Error while getting the users from the DB: ${err}`));
@@ -67,7 +67,7 @@ router.get('/users-list', (req, res) => {
     router.post('/users/:id/delete', (req, res, next) => {
       
       const { id } = req.params;
-      console.log(id)
+      //console.log(id)
       User.findByIdAndRemove(id)
         .then((user) => {
           

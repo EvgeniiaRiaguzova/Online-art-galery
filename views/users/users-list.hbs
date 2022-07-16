@@ -1,14 +1,20 @@
+<style>
+  .card{
+  background-position: center;
+  background-size: cover;
+  background-image: url("/images/background/b7a.png");
+  }
+</style>
 {{!-- <h1>Artists</h1> --}}
-<hr>
 <div class="row">
   {{#each users}}
-    <div class="col-md-3 mb-5">
-      <div class="card" style="width: 18rem;">
+    <div class="column">
+      <div class="card" style="width: 18rem; height: 25rem;">
         <img src="{{imageUrl}}" class="card-img-top" alt="{{title}}">
         <div class="card-body">
           <h5 class="card-title">{{username}}</h5>
           {{!-- <p class="card-text">{{description}}</p> --}}
-          <a href="/users/{{this._id}}/paintings">Paintings</a>
+          <a class="card-link" href="/users/{{this._id}}/paintings">Paintings</a>
         </div>
       </div>
     </div>

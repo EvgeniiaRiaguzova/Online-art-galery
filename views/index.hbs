@@ -1,22 +1,23 @@
 
 
 
-<div class="main-page-paingings">
+<div class="row .row-cols-3 row-cols-md-2 g-4">
         {{!-- "col-md- mb-5" --}}
     {{#each paintings}}
 
-            <div style="width: 20rem; padding: 30px">
-                        
-                <img id="paintingImg" src="{{imageUrl}}" alt="{{title}}">
+        <div class="col">
+           <div class="card">
+                <img class="card-img-top" src="{{imageUrl}}" alt="{{title}}">
                 <div class="card-body">
                     {{#each this.author}}
-                    <h6><span>By </span>{{this.username}}</h6>
+                    <h4>By {{this.username}}</h4>
                     {{/each}}
-                    <h6 class="card-title">{{title}}</h6>
-                    <a href="/paintings/{{_id}}">Details</a>
+                    <h5 class="card-title">{{title}}</h5>
+                    <a class="card-link" href="/paintings/{{_id}}">Details</a>
                     </form>
                 </div>
             </div>
+        </div>
 
 
     {{else}}
