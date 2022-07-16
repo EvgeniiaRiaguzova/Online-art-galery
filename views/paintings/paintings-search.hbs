@@ -1,19 +1,23 @@
-<h2>Search result</h2>
+<style>
+    h2 {
+        text-align: left;
+    }
+</style>
+
+<h2>Results found</h2>
  
  {{#each foundPaintings}}
-    <div class="col-md-4 mb-5">
-        <div class="card" style="width: 18rem;">
+    <div class="column">
+        <div class="card" style="width: 25rem;">
             <img src="{{this.imageUrl}}" alt="{{this.title}}">
             <div class="card-body">
                 {{#each this.author}}
-                <h5>by: {{this.username}}</h5>
+                <h3>by: {{this.username}}</h3>
                 {{/each}}
-                <a href="/paintings/{{this._id}}">Details</a>
+                <a class="card-link" href="/paintings/{{this._id}}">Details</a>
             </div>
         </div>
     </div>
 {{else}}
     <p>No paintings found</p>
 {{/each}}
-
-<a href="/">Back</a>

@@ -119,16 +119,16 @@ router.post('/paintings/create', isLoggedIn, fileUploader.single('painting-image
 
     // 6. Route for search painting
 
-    router.get ("/paintings/search", (req, res, next) =>{
-      // console.log(req.query.search);
-      Painting.find({ title : req.query.search })
-      .populate('author')
-      .then((foundPaintings) => {
-        res.render("paintings/paintings-search", {foundPaintings})
-      })
-      .catch((err) => console.log(err))
+  //   router.get ("/paintings/search", (req, res, next) =>{
+  //     // console.log(req.query.search);
+  //     Painting.find({ title : req.query.search })
+  //     .populate('author')
+  //     .then((foundPaintings) => {
+  //       res.render("paintings/paintings-search", {foundPaintings})
+  //     })
+  //     .catch((err) => console.log(err))
       
-   })
+  //  })
 
   // 6. Route for search painting
 
@@ -139,13 +139,14 @@ router.post('/paintings/create', isLoggedIn, fileUploader.single('painting-image
 
   // 6. Route for search painting
 
-//   router.get ("/paintings/search", (req, res, next) =>{
-//     Painting.find({ title : req.query })
-//     .then((foundPaintings) => {
-//       res.render("paintings-search", foundPaintings)
-//     })
-//     .catch((err) => console.log(err))
-//  })
+  router.get ("/paintings/search", (req, res, next) =>{
+    Painting.find({ $text : { $search : req.query.search }})
+    .populate('author')
+    .then((foundPaintings) => {
+      res.render("paintings/paintings-search", {foundPaintings})
+    })
+    .catch((err) => console.log(err))
+ })
 
   
 // 5. Each painting details page / Read
